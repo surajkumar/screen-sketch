@@ -37,7 +37,7 @@ public class DrawingFrame {
     public void blockDesktopInteraction() {
         nativeFrameAction.disablePassThrough();
         frame.setBackground(Color.BLACK);
-        frame.setOpacity(0.50F);
+        frame.setOpacity(0.10F);
     }
 
     public void resumeDesktopInteraction() {

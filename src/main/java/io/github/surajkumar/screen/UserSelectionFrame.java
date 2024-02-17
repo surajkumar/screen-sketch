@@ -4,6 +4,9 @@ import io.github.surajkumar.screen.drawing.DrawingFrame;
 import io.github.surajkumar.screen.drawing.shapes.ShapeManager;
 import io.github.surajkumar.screen.drawing.shapes.ShapeType;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.awt.Color;
 import java.awt.GridLayout;
 
@@ -12,6 +15,7 @@ import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 
 public class UserSelectionFrame {
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserSelectionFrame.class);
     private final JFrame frame;
     private final DrawingFrame drawFrame;
     private final ShapeManager shapeManager;
@@ -77,6 +81,14 @@ public class UserSelectionFrame {
                         shapeManager.setSelectedColor(
                                 JColorChooser.showDialog(null, "Choose a color", Color.RED)));
 
+        JButton clearButton = new JButton("Clear");
+        clearButton.addActionListener(
+                e -> {
+                    shapeManager.getShapes().clear();
+                    shapeManager.setSelectedType(ShapeType.NONE);
+                    LOGGER.info("Cleared screen");
+                });
+
         frame.add(createSquareButton);
         frame.add(createCircleButton);
         frame.add(createCrossButton);
@@ -85,6 +97,7 @@ public class UserSelectionFrame {
 
         frame.add(createFreeButton);
         frame.add(selectColorButton);
+        frame.add(clearButton);
     }
 
     public void show() {
