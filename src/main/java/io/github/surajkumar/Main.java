@@ -19,6 +19,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import javax.swing.UIManager;
+
 public class Main {
     private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
     private static final ScheduledExecutorService EXECUTOR_SERVICE =
@@ -26,6 +28,14 @@ public class Main {
 
     public static void main(String[] args) {
         LOGGER.info("Starting Screen-Sketch program");
+
+        try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        } catch (Exception e) {
+            LOGGER.warn(
+                    "Could not set com.sun.java.swing.plaf.windows.WindowsLookAndFeel look and"
+                            + " feel");
+        }
 
         ShapeManager shapeManager = new ShapeManager();
 
