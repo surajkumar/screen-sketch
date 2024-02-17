@@ -50,15 +50,12 @@ public class MouseInputListener implements NativeMouseListener, NativeMouseMotio
 
     @Override
     public void nativeMousePressed(NativeMouseEvent e) {
-        if (shapeManager.getSelectedType() == ShapeType.NONE) {
-            return;
+        if (e.getButton() == RIGHT_CLICK) {
+            shapeManager.removeShape(e.getX(), e.getY());
         }
-
-        if (e.getButton() == LEFT_CLICK) {
+        if (e.getButton() == LEFT_CLICK && shapeManager.getSelectedType() != ShapeType.NONE) {
             startLocation = new Point(e.getX(), e.getY());
             endLocation = new Point(e.getX(), e.getY());
-        } else if (e.getButton() == RIGHT_CLICK) {
-            shapeManager.removeShape(e.getX(), e.getY());
         }
     }
 

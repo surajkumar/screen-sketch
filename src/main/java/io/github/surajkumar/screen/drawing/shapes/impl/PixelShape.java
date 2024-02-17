@@ -6,7 +6,7 @@ import io.github.surajkumar.screen.drawing.shapes.ShapeLocation;
 import java.awt.Graphics2D;
 
 public class PixelShape implements Shape {
-    private static final int PIXEL_SIZE = 10;
+    private static final int PIXEL_SIZE = 5;
     private final ShapeLocation shapeLocation;
 
     public PixelShape(ShapeLocation shapeLocation) {

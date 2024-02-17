@@ -34,7 +34,7 @@ public class DrawingPanel extends JPanel {
                 .forEach(
                         shapeContainer -> {
                             g2d.setColor(shapeContainer.color());
-                            g2d.setStroke(new BasicStroke(3.0F));
+                            g2d.setStroke(new BasicStroke(2.0F));
                             shapeContainer.shape().draw(g2d);
                         });
     }
