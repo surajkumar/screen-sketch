@@ -1,0 +1,45 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.diffplug.spotless' version '6.22.0'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+group = 'io.github.surajkumar'
+version = '1.0'
+
+application {
+    mainClassName = 'io.github.surajkumar.Main'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.apache.logging.log4j:log4j-core:2.21.1'
+    implementation 'org.apache.logging.log4j:log4j-slf4j18-impl:2.18.0'
+}
+
+spotless {
+    java {
+        removeUnusedImports()
+        importOrder()
+        googleJavaFormat()
+                .aosp()
+                .reflowLongStrings()
+                .formatJavadoc(true)
+                .reorderImports(true)
+                .groupArtifact('com.google.googlejavaformat:google-java-format')
+        trimTrailingWhitespace()
+        indentWithSpaces()
+        endWithNewline()
+        cleanthat()
+    }
+}
+
+shadowJar {
+    archiveBaseName.set('screen-sketch')
+    archiveClassifier.set('')
+    archiveVersion.set('')
+}
