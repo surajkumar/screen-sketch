@@ -25,11 +25,6 @@ public class UserSelectionFrame {
     private final ShapeManager shapeManager;
     private int mouseX, mouseY;
 
-    public static void main(String[] args) {
-        UserSelectionFrame userSelectionFrame = new UserSelectionFrame(null, null);
-        userSelectionFrame.show();
-    }
-
     public UserSelectionFrame(ShapeManager shapeManager, DrawingFrame drawFrame) {
         this.drawFrame = drawFrame;
         this.shapeManager = shapeManager;
@@ -90,23 +85,6 @@ public class UserSelectionFrame {
 
         addComponents();
         frame.pack();
-    }
-
-    private JButton createButton(
-            String text, Color backgroundColor, Color foregroundColor, ShapeType shapeType) {
-        JButton button = new JButton(text);
-        button.setBackground(backgroundColor);
-        button.setForeground(foregroundColor);
-        button.setBorderPainted(false);
-        button.addActionListener(
-                e -> {
-                    drawFrame.blockDesktopInteraction();
-                    shapeManager.setSelectedType(shapeType);
-                    if (shapeType == ShapeType.NONE) {
-                        shapeManager.setMovingShape(true);
-                    }
-                });
-        return button;
     }
 
     private JButton createActionButton(

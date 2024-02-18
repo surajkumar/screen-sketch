@@ -18,6 +18,9 @@ who want to draw on their screens.
 
 Disclaimer: Due to the use of native API calls, this program will not work on macOS or Linux operating systems.
 
+## Screenshot
+![Screenshot](https://i.imgur.com/pdgnKbA.png)
+
 ## Development
 ### Pre-Requisites
 #### Hooks
