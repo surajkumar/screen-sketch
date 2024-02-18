@@ -7,120 +7,223 @@ import io.github.surajkumar.screen.drawing.shapes.ShapeType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.GridLayout;
+import java.awt.FlowLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class UserSelectionFrame {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserSelectionFrame.class);
     private final JFrame frame;
     private final DrawingFrame drawFrame;
     private final ShapeManager shapeManager;
+    private int mouseX, mouseY;
+
+    public static void main(String[] args) {
+        UserSelectionFrame userSelectionFrame = new UserSelectionFrame(null, null);
+        userSelectionFrame.show();
+    }
 
     public UserSelectionFrame(ShapeManager shapeManager, DrawingFrame drawFrame) {
         this.drawFrame = drawFrame;
         this.shapeManager = shapeManager;
         frame = new JFrame("Screen Sketch");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        frame.getContentPane().setBackground(Color.BLACK);
+        frame.getContentPane().setForeground(Color.BLACK);
+
         frame.setAlwaysOnTop(true);
         frame.setFocusable(true);
         frame.setResizable(false);
-        frame.setBounds(0, 500, 200, 400);
-        frame.setLayout(new GridLayout(0, 1));
+        frame.setBounds(drawFrame.getFrame().getWidth() / 2 - 200, 10, 200, 400);
+        frame.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+
+        frame.setUndecorated(true);
+
+        JPanel titleBar = new JPanel();
+        titleBar.setBackground(new Color(50, 50, 50)); // Set the title area color
+        titleBar.setLayout(new FlowLayout(FlowLayout.RIGHT));
+
+        // Add a close button to the title bar
+        JButton closeButton = new JButton("X");
+        closeButton.setFocusPainted(false);
+        closeButton.setBorderPainted(false);
+        closeButton.setBackground(new Color(50, 50, 50));
+        closeButton.setForeground(Color.WHITE);
+        closeButton.addMouseListener(
+                new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        System.exit(0);
+                    }
+                });
+        titleBar.add(closeButton);
+
+        titleBar.addMouseListener(
+                new MouseAdapter() {
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        mouseX = e.getX();
+                        mouseY = e.getY();
+                    }
+                });
+
+        titleBar.addMouseMotionListener(
+                new MouseAdapter() {
+                    @Override
+                    public void mouseDragged(MouseEvent e) {
+                        int x = e.getXOnScreen() - mouseX;
+                        int y = e.getYOnScreen() - mouseY;
+                        frame.setLocation(x, y);
+                    }
+                });
+
+        // Add the title bar to the content pane
+        frame.getContentPane().add(titleBar, BorderLayout.NORTH);
+
         addComponents();
+        frame.pack();
+    }
+
+    private JButton createButton(
+            String text, Color backgroundColor, Color foregroundColor, ShapeType shapeType) {
+        JButton button = new JButton(text);
+        button.setBackground(backgroundColor);
+        button.setForeground(foregroundColor);
+        button.setBorderPainted(false);
+        button.addActionListener(
+                e -> {
+                    drawFrame.blockDesktopInteraction();
+                    shapeManager.setSelectedType(shapeType);
+                    if (shapeType == ShapeType.NONE) {
+                        shapeManager.setMovingShape(true);
+                    }
+                });
+        return button;
+    }
+
+    private JButton createActionButton(
+            String text, Color backgroundColor, Color foregroundColor, Runnable action) {
+        JButton button = new JButton(text);
+        button.setBackground(backgroundColor);
+        button.setForeground(foregroundColor);
+        button.setBorderPainted(false);
+        button.addActionListener(e -> action.run());
+        return button;
     }
 
     private void addComponents() {
-        JButton moveShapeButton = new JButton("Move");
-        moveShapeButton.addActionListener(
-                e -> {
-                    drawFrame.blockDesktopInteraction();
-                    shapeManager.setSelectedType(ShapeType.NONE);
-                    shapeManager.setMovingShape(true);
-                });
+        frame.add(
+                createActionButton(
+                        "Move",
+                        new Color(20, 20, 20),
+                        Color.WHITE,
+                        () -> {
+                            drawFrame.blockDesktopInteraction();
+                            shapeManager.setSelectedType(ShapeType.NONE);
+                            shapeManager.setMovingShape(true);
+                        }));
 
-        JButton createSquareButton = new JButton("Square");
-        createSquareButton.addActionListener(
-                e -> {
-                    drawFrame.blockDesktopInteraction();
-                    shapeManager.setSelectedType(ShapeType.SQUARE);
-                });
+        frame.add(
+                createActionButton(
+                        "Square",
+                        new Color(20, 20, 20),
+                        Color.YELLOW,
+                        () -> {
+                            drawFrame.blockDesktopInteraction();
+                            shapeManager.setSelectedType(ShapeType.SQUARE);
+                        }));
 
-        JButton createCircleButton = new JButton("Circle");
-        createCircleButton.addActionListener(
-                e -> {
-                    drawFrame.blockDesktopInteraction();
-                    shapeManager.setSelectedType(ShapeType.CIRCLE);
-                });
+        frame.add(
+                createActionButton(
+                        "Circle",
+                        new Color(20, 20, 20),
+                        Color.YELLOW,
+                        () -> {
+                            drawFrame.blockDesktopInteraction();
+                            shapeManager.setSelectedType(ShapeType.CIRCLE);
+                        }));
 
-        JButton createCrossButton = new JButton("Cross");
-        createCrossButton.addActionListener(
-                e -> {
-                    drawFrame.blockDesktopInteraction();
-                    shapeManager.setSelectedType(ShapeType.CROSS);
-                });
+        frame.add(
+                createActionButton(
+                        "Cross",
+                        new Color(20, 20, 20),
+                        Color.RED,
+                        () -> {
+                            drawFrame.blockDesktopInteraction();
+                            shapeManager.setSelectedType(ShapeType.CROSS);
+                        }));
 
-        JButton createTickButton = new JButton("Tick");
-        createTickButton.addActionListener(
-                e -> {
-                    drawFrame.blockDesktopInteraction();
-                    shapeManager.setSelectedType(ShapeType.TICK);
-                });
+        frame.add(
+                createActionButton(
+                        "Tick",
+                        new Color(20, 20, 20),
+                        Color.GREEN,
+                        () -> {
+                            drawFrame.blockDesktopInteraction();
+                            shapeManager.setSelectedType(ShapeType.TICK);
+                        }));
 
-        JButton createArrowButton = new JButton("Arrow");
-        createArrowButton.addActionListener(
-                e -> {
-                    drawFrame.blockDesktopInteraction();
-                    shapeManager.setSelectedType(ShapeType.ARROW);
-                });
+        frame.add(
+                createActionButton(
+                        "Arrow",
+                        new Color(20, 20, 20),
+                        Color.WHITE,
+                        () -> {
+                            drawFrame.blockDesktopInteraction();
+                            shapeManager.setSelectedType(ShapeType.ARROW);
+                        }));
 
-        JButton createFreeButton = new JButton("Free Hand");
-        createFreeButton.addActionListener(
-                e -> {
-                    drawFrame.blockDesktopInteraction();
-                    shapeManager.setSelectedType(ShapeType.FREE);
-                });
+        frame.add(
+                createActionButton(
+                        "Free Hand",
+                        new Color(20, 20, 20),
+                        Color.MAGENTA,
+                        () -> {
+                            drawFrame.blockDesktopInteraction();
+                            shapeManager.setSelectedType(ShapeType.FREE);
+                        }));
 
-        JButton selectColorButton = new JButton("Select Color");
-        selectColorButton.addActionListener(
-                e ->
-                        shapeManager.setSelectedColor(
-                                JColorChooser.showDialog(null, "Choose a color", Color.RED)));
+        frame.add(
+                createActionButton(
+                        "Select Color",
+                        new Color(20, 20, 20),
+                        Color.CYAN,
+                        () ->
+                                shapeManager.setSelectedColor(
+                                        JColorChooser.showDialog(
+                                                null, "Choose a color", Color.RED))));
 
-        JButton clearButton = new JButton("Clear");
-        clearButton.addActionListener(
-                e -> {
-                    shapeManager.getShapes().clear();
-                    shapeManager.setSelectedType(ShapeType.NONE);
-                    LOGGER.info("Cleared screen");
-                });
+        frame.add(
+                createActionButton(
+                        "Clear",
+                        new Color(20, 20, 20),
+                        Color.WHITE,
+                        () -> {
+                            shapeManager.getShapes().clear();
+                            shapeManager.setSelectedType(ShapeType.NONE);
+                            LOGGER.info("Cleared screen");
+                        }));
 
-        JButton undoButton = new JButton("Undo");
-        undoButton.addActionListener(e -> shapeManager.undo());
+        frame.add(
+                createActionButton("Undo", new Color(20, 20, 20), Color.WHITE, shapeManager::undo));
 
-        JButton redoButton = new JButton("Redo");
-        redoButton.addActionListener(e -> shapeManager.redo());
+        frame.add(
+                createActionButton("Redo", new Color(20, 20, 20), Color.WHITE, shapeManager::redo));
 
-        JButton resetColor = new JButton("Reset Color");
-        resetColor.addActionListener(e -> shapeManager.resetBackToDefaultColor());
-
-        frame.add(moveShapeButton);
-        frame.add(createSquareButton);
-        frame.add(createCircleButton);
-        frame.add(createCrossButton);
-        frame.add(createTickButton);
-        frame.add(createArrowButton);
-
-        frame.add(createFreeButton);
-        frame.add(selectColorButton);
-        frame.add(clearButton);
-
-        frame.add(undoButton);
-        frame.add(redoButton);
-        frame.add(resetColor);
+        frame.add(
+                createActionButton(
+                        "Reset Color",
+                        new Color(20, 20, 20),
+                        Color.WHITE,
+                        shapeManager::resetBackToDefaultColor));
     }
 
     public void show() {

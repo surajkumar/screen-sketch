@@ -1,8 +1,8 @@
-# Screen Sketch
+# Screen Sketch for Windows Operating System
 A desktop application written in Java to allow you to draw all over your entire screen.
 
 This program allows you to draw shapes or add text straight onto your desktop. Similar to the [ScreenBrush](https://apps.apple.com/us/app/screenbrush/id1233965871?mt=12) application
-for macOS. There are no free alternatives that support the Windows operating system making this a great tool for those
+for macOS. There are not many alternatives that support the Windows operating system making this a great tool for those
 who want to draw on their screens.
 
 ## Key Benefits
@@ -15,6 +15,8 @@ who want to draw on their screens.
 * Free-hand drawing capabilities
 * Colour picker to customize each drawn element
 * Export your drawings as screenshots
+
+Disclaimer: Due to the use of native API calls, this program will not work on macOS or Linux operating systems.
 
 ## Development
 ### Pre-Requisites
