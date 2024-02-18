@@ -8,4 +8,3 @@ Include screenshots if applicable.
 - [ ] This PR contains environment variables, program arguments
 - [ ] Documentation has been updated
 - [ ] Tests have been added
-
