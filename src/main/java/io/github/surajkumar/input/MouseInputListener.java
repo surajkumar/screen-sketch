@@ -42,14 +42,10 @@ public class MouseInputListener implements NativeMouseListener, NativeMouseMotio
 
         if (shapeManager.isMovingShape()) {
             if (movingShape != null) {
-
                 int deltaX = e.getX() - movingShape.location().getStartX();
                 int deltaY = e.getY() - movingShape.location().getStartY();
-
                 movingShape.location().setStartX(movingShape.location().getStartX() + deltaX);
                 movingShape.location().setEndX(movingShape.location().getEndX() + deltaX);
-
-                // Update both startY and endY
                 movingShape.location().setStartY(movingShape.location().getStartY() + deltaY);
                 movingShape.location().setEndY(movingShape.location().getEndY() + deltaY);
             }

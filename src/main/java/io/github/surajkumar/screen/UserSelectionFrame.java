@@ -97,6 +97,12 @@ public class UserSelectionFrame {
                     LOGGER.info("Cleared screen");
                 });
 
+        JButton undoButton = new JButton("Undo");
+        undoButton.addActionListener(e -> shapeManager.undo());
+
+        JButton redoButton = new JButton("Redo");
+        redoButton.addActionListener(e -> shapeManager.redo());
+
         frame.add(moveShapeButton);
         frame.add(createSquareButton);
         frame.add(createCircleButton);
@@ -107,6 +113,9 @@ public class UserSelectionFrame {
         frame.add(createFreeButton);
         frame.add(selectColorButton);
         frame.add(clearButton);
+
+        frame.add(undoButton);
+        frame.add(redoButton);
     }
 
     public void show() {

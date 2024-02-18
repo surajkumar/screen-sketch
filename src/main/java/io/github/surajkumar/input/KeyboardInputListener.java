@@ -22,6 +22,7 @@ public class KeyboardInputListener implements NativeKeyListener {
         if (e.getKeyCode() == ESC_KEY_CODE) {
             shapeManager.setSelectedType(ShapeType.NONE);
             drawingFrame.resumeDesktopInteraction();
+            shapeManager.setMovingShape(false);
         }
     }
 }
