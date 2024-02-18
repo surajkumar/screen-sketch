@@ -27,6 +27,7 @@ public class UserSelectionFrame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setAlwaysOnTop(true);
         frame.setFocusable(true);
+        frame.setResizable(false);
         frame.setBounds(0, 500, 200, 400);
         frame.setLayout(new GridLayout(0, 1));
         addComponents();
@@ -103,6 +104,9 @@ public class UserSelectionFrame {
         JButton redoButton = new JButton("Redo");
         redoButton.addActionListener(e -> shapeManager.redo());
 
+        JButton resetColor = new JButton("Reset Color");
+        resetColor.addActionListener(e -> shapeManager.resetBackToDefaultColor());
+
         frame.add(moveShapeButton);
         frame.add(createSquareButton);
         frame.add(createCircleButton);
@@ -116,6 +120,7 @@ public class UserSelectionFrame {
 
         frame.add(undoButton);
         frame.add(redoButton);
+        frame.add(resetColor);
     }
 
     public void show() {

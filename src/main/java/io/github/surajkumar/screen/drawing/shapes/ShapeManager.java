@@ -16,14 +16,18 @@ public class ShapeManager {
     private final Stack<List<SpaceContainer>> redoStack = new Stack<>();
     private final List<ShapeLocation> draggingPoints = new CopyOnWriteArrayList<>();
     private ShapeType selectedType = ShapeType.NONE;
-    private Color selectedColor = Color.RED;
+    private Color selectedColor = null;
     private boolean movingShape;
 
     public void addShape(Shape shape, ShapeLocation location) {
         LOGGER.info("Adding shape {}", shape.getClass().getName());
         undoStack.push(new ArrayList<>(shapes));
         redoStack.clear();
-        shapes.add(new SpaceContainer(shape, location, selectedColor));
+        shapes.add(
+                new SpaceContainer(
+                        shape,
+                        location,
+                        selectedColor == null ? shape.defaultColor() : selectedColor));
     }
 
     public void removeShape(int x, int y) {
@@ -34,6 +38,10 @@ public class ShapeManager {
             redoStack.clear();
             shapes.remove(shapeToRemove);
         }
+    }
+
+    public void resetBackToDefaultColor() {
+        selectedColor = null;
     }
 
     public void undo() {

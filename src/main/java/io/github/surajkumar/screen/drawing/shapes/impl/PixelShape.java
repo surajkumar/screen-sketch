@@ -3,6 +3,7 @@ package io.github.surajkumar.screen.drawing.shapes.impl;
 import io.github.surajkumar.screen.drawing.shapes.Shape;
 import io.github.surajkumar.screen.drawing.shapes.ShapeLocation;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class PixelShape implements Shape {
@@ -11,6 +12,11 @@ public class PixelShape implements Shape {
 
     public PixelShape(ShapeLocation shapeLocation) {
         this.shapeLocation = shapeLocation;
+    }
+
+    @Override
+    public Color defaultColor() {
+        return Color.MAGENTA;
     }
 
     @Override
