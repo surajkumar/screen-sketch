@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 
 public class UserSelectionFrame {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserSelectionFrame.class);
+    private final HelpScreen helpScreen = new HelpScreen();
     private final JFrame frame;
     private final DrawingFrame drawFrame;
     private final ShapeManager shapeManager;
@@ -202,6 +203,8 @@ public class UserSelectionFrame {
                         new Color(20, 20, 20),
                         Color.WHITE,
                         shapeManager::resetBackToDefaultColor));
+
+        frame.add(createActionButton("Help", new Color(20, 20, 20), Color.WHITE, helpScreen::show));
     }
 
     public void show() {
