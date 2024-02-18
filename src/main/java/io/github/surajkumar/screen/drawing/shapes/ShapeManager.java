@@ -13,6 +13,7 @@ public class ShapeManager {
     private final List<ShapeLocation> draggingPoints = new CopyOnWriteArrayList<>();
     private ShapeType selectedType = ShapeType.NONE;
     private Color selectedColor = Color.RED;
+    private boolean movingShape;
 
     public void addShape(Shape shape, ShapeLocation location) {
         LOGGER.info("Adding shape {}", shape.getClass().getName());
@@ -20,19 +21,23 @@ public class ShapeManager {
     }
 
     public void removeShape(int x, int y) {
-        SpaceContainer shapeToRemove = null;
-
-        for (SpaceContainer spaceContainer : shapes) {
-            ShapeLocation shapeLocation = spaceContainer.location();
-            if (shapeLocation.withinLocation(x, y)) {
-                shapeToRemove = spaceContainer;
-            }
-        }
+        SpaceContainer shapeToRemove = getShape(x, y);
 
         if (shapeToRemove != null) {
             LOGGER.info("Removing shape {} at x={} y={}", shapeToRemove.getClass().getName(), x, y);
             shapes.remove(shapeToRemove);
         }
+    }
+
+    public SpaceContainer getShape(int x, int y) {
+        SpaceContainer shape = null;
+        for (SpaceContainer spaceContainer : shapes) {
+            ShapeLocation shapeLocation = spaceContainer.location();
+            if (shapeLocation.withinLocation(x, y)) {
+                shape = spaceContainer;
+            }
+        }
+        return shape;
     }
 
     public List<SpaceContainer> getShapes() {
@@ -62,5 +67,13 @@ public class ShapeManager {
 
     public void setSelectedColor(Color selectedColor) {
         this.selectedColor = selectedColor;
+    }
+
+    public boolean isMovingShape() {
+        return movingShape;
+    }
+
+    public void setMovingShape(boolean movingShape) {
+        this.movingShape = movingShape;
     }
 }

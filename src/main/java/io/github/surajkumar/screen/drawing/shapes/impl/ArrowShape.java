@@ -25,17 +25,17 @@ public class ArrowShape implements Shape {
 
         double angle =
                 Math.atan2(
-                        shapeLocation.endY() - shapeLocation.startY(),
-                        shapeLocation.endX() - shapeLocation.startX());
-        double arrowX1 = shapeLocation.endX() - ARROW_SIZE * Math.cos(angle - Math.PI / 6);
-        double arrowY1 = shapeLocation.endY() - ARROW_SIZE * Math.sin(angle - Math.PI / 6);
-        double arrowX2 = shapeLocation.endX() - ARROW_SIZE * Math.cos(angle + Math.PI / 6);
-        double arrowY2 = shapeLocation.endY() - ARROW_SIZE * Math.sin(angle + Math.PI / 6);
+                        shapeLocation.getEndY() - shapeLocation.getStartY(),
+                        shapeLocation.getEndX() - shapeLocation.getStartX());
+        double arrowX1 = shapeLocation.getEndX() - ARROW_SIZE * Math.cos(angle - Math.PI / 6);
+        double arrowY1 = shapeLocation.getEndY() - ARROW_SIZE * Math.sin(angle - Math.PI / 6);
+        double arrowX2 = shapeLocation.getEndX() - ARROW_SIZE * Math.cos(angle + Math.PI / 6);
+        double arrowY2 = shapeLocation.getEndY() - ARROW_SIZE * Math.sin(angle + Math.PI / 6);
 
-        path.moveTo(shapeLocation.startX(), shapeLocation.startY());
-        path.lineTo(shapeLocation.endX(), shapeLocation.endY());
+        path.moveTo(shapeLocation.getStartX(), shapeLocation.getStartX());
+        path.lineTo(shapeLocation.getEndX(), shapeLocation.getEndY());
         path.lineTo(arrowX1, arrowY1);
-        path.moveTo(shapeLocation.endX(), shapeLocation.endY());
+        path.moveTo(shapeLocation.getEndX(), shapeLocation.getEndY());
         path.lineTo(arrowX2, arrowY2);
 
         return path;

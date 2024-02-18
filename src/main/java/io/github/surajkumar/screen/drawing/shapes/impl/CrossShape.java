@@ -21,8 +21,8 @@ public class CrossShape implements Shape {
     }
 
     private Path2D createCrossPath() {
-        int x = shapeLocation.startX();
-        int y = shapeLocation.startY();
+        int x = shapeLocation.getStartX();
+        int y = shapeLocation.getStartY();
         Path2D path = new Path2D.Double();
         path.moveTo(x - (double) CROSS_SIZE / 2, y - (double) CROSS_SIZE / 2);
         path.lineTo(x + (double) CROSS_SIZE / 2, y + (double) CROSS_SIZE / 2);

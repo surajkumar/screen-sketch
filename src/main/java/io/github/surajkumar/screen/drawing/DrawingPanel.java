@@ -47,10 +47,10 @@ public class DrawingPanel extends JPanel {
         ShapeLocation start = shapeManager.getDraggingPoints().getFirst();
         ShapeLocation end = shapeManager.getDraggingPoints().getLast();
 
-        int x = Math.min(start.startX(), end.startX());
-        int y = Math.min(start.startY(), end.startY());
-        int width = Math.abs(end.startX() - start.startX());
-        int height = Math.abs(end.startY() - start.startY());
+        int x = Math.min(start.getStartX(), end.getStartX());
+        int y = Math.min(start.getStartY(), end.getStartY());
+        int width = Math.abs(end.getStartX() - start.getStartX());
+        int height = Math.abs(end.getStartY() - start.getStartY());
 
         g2d.setStroke(DRAG_STOKE);
         g2d.setColor(Color.GRAY);
@@ -59,10 +59,10 @@ public class DrawingPanel extends JPanel {
             case SQUARE -> g2d.drawRect(x, y, width, height);
             case CIRCLE -> g2d.drawOval(x, y, width, height);
             case ARROW -> {
-                int startX = start.startX();
-                int startY = start.startY();
-                int endX = end.startX();
-                int endY = end.startY();
+                int startX = start.getStartX();
+                int startY = start.getStartY();
+                int endX = end.getStartX();
+                int endY = end.getStartY();
                 int midX = (startX + endX) / 2;
                 int midY = (startY + endY) / 2;
                 g2d.drawLine(startX, startY, midX, midY);

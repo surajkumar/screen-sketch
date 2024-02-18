@@ -15,6 +15,6 @@ public class PixelShape implements Shape {
 
     @Override
     public void draw(Graphics2D g2d) {
-        g2d.fillRect(shapeLocation.startX(), shapeLocation.startY(), PIXEL_SIZE, PIXEL_SIZE);
+        g2d.fillRect(shapeLocation.getStartX(), shapeLocation.getStartY(), PIXEL_SIZE, PIXEL_SIZE);
     }
 }

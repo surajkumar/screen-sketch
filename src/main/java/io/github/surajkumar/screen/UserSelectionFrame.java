@@ -33,6 +33,14 @@ public class UserSelectionFrame {
     }
 
     private void addComponents() {
+        JButton moveShapeButton = new JButton("Move");
+        moveShapeButton.addActionListener(
+                e -> {
+                    drawFrame.blockDesktopInteraction();
+                    shapeManager.setSelectedType(ShapeType.NONE);
+                    shapeManager.setMovingShape(true);
+                });
+
         JButton createSquareButton = new JButton("Square");
         createSquareButton.addActionListener(
                 e -> {
@@ -89,6 +97,7 @@ public class UserSelectionFrame {
                     LOGGER.info("Cleared screen");
                 });
 
+        frame.add(moveShapeButton);
         frame.add(createSquareButton);
         frame.add(createCircleButton);
         frame.add(createCrossButton);

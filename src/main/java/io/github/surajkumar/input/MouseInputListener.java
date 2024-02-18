@@ -9,6 +9,7 @@ import io.github.surajkumar.screen.drawing.shapes.Shape;
 import io.github.surajkumar.screen.drawing.shapes.ShapeLocation;
 import io.github.surajkumar.screen.drawing.shapes.ShapeManager;
 import io.github.surajkumar.screen.drawing.shapes.ShapeType;
+import io.github.surajkumar.screen.drawing.shapes.SpaceContainer;
 import io.github.surajkumar.screen.drawing.shapes.impl.ArrowShape;
 import io.github.surajkumar.screen.drawing.shapes.impl.CircleShape;
 import io.github.surajkumar.screen.drawing.shapes.impl.CrossShape;
@@ -26,6 +27,7 @@ public class MouseInputListener implements NativeMouseListener, NativeMouseMotio
     private Point startLocation;
     private Point endLocation;
     private boolean performingMouseDrag;
+    private SpaceContainer movingShape;
 
     public MouseInputListener(DrawingFrame frame, ShapeManager shapeManager) {
         this.frame = frame;
@@ -34,9 +36,26 @@ public class MouseInputListener implements NativeMouseListener, NativeMouseMotio
 
     @Override
     public void nativeMouseDragged(NativeMouseEvent e) {
-        if (shapeManager.getSelectedType() == ShapeType.NONE) {
+        if (shapeManager.getSelectedType() == ShapeType.NONE && !shapeManager.isMovingShape()) {
             return;
         }
+
+        if (shapeManager.isMovingShape()) {
+            if (movingShape != null) {
+
+                int deltaX = e.getX() - movingShape.location().getStartX();
+                int deltaY = e.getY() - movingShape.location().getStartY();
+
+                movingShape.location().setStartX(movingShape.location().getStartX() + deltaX);
+                movingShape.location().setEndX(movingShape.location().getEndX() + deltaX);
+
+                // Update both startY and endY
+                movingShape.location().setStartY(movingShape.location().getStartY() + deltaY);
+                movingShape.location().setEndY(movingShape.location().getEndY() + deltaY);
+            }
+            return;
+        }
+
         performingMouseDrag = true;
 
         ShapeLocation shapeLocation = new ShapeLocation(e.getX(), e.getY(), e.getX(), e.getY());
@@ -53,6 +72,11 @@ public class MouseInputListener implements NativeMouseListener, NativeMouseMotio
         if (e.getButton() == RIGHT_CLICK) {
             shapeManager.removeShape(e.getX(), e.getY());
         }
+
+        if (e.getButton() == LEFT_CLICK && shapeManager.isMovingShape()) {
+            movingShape = shapeManager.getShape(e.getX(), e.getY());
+        }
+
         if (e.getButton() == LEFT_CLICK && shapeManager.getSelectedType() != ShapeType.NONE) {
             startLocation = new Point(e.getX(), e.getY());
             endLocation = new Point(e.getX(), e.getY());

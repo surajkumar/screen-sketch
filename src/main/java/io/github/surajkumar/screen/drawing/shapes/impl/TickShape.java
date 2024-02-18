@@ -21,8 +21,8 @@ public class TickShape implements Shape {
     }
 
     private Path2D createTickPath() {
-        int x = shapeLocation.startX();
-        int y = shapeLocation.startY();
+        int x = shapeLocation.getStartX();
+        int y = shapeLocation.getStartY();
 
         Path2D path = new Path2D.Double();
         path.moveTo(x, y);
